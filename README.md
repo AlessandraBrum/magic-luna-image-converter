@@ -41,6 +41,6 @@ O Magic Luna funciona 100% no seu computador: ele não se conecta à internet e 
 
 ---
 
-**Full Changelog**: https://github.com/AlessandraBrum/img-converter-png-to-webp/commits/v1.0.0
+**Full Changelog**: https://github.com/AlessandraBrum/magic-luna-image-converter/commits/v1.0.0
 
 [Check out the Protoype on Figma](https://www.figma.com/proto/yxyfUJRUgjRv0XiJgZaoV2/Magic-Luna-Converter-PNG-to-WebP-in-Python?node-id=13-177&t=fi1ELCBGUEikAC6F-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1)
