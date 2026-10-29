@@ -9,6 +9,8 @@ This is my first ever project in Python, and it already works. For now, it only 
 
 Stay tuned for more updates! ✨
 
+[Check out the Protoype on Figma](https://www.figma.com/proto/yxyfUJRUgjRv0XiJgZaoV2/Magic-Luna-Converter-PNG-to-WebP-in-Python?node-id=13-177&t=fi1ELCBGUEikAC6F-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1)
+
 ## How to run
 
 ```
