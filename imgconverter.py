@@ -1,9 +1,11 @@
+import ctypes
+import subprocess
 import webbrowser
 from pathlib import Path
 from tkinter import filedialog
 
 import customtkinter as ctk
-from PIL import Image, ImageChops, ImageDraw, ImageTk
+from PIL import Image, ImageChops, ImageDraw, ImageTk, features
 
 COR_FUNDO = "#16111C"
 COR_PAINEL = "#221A2B"
@@ -28,12 +30,32 @@ FONTE_TEXTO = ("Segoe UI", 16)
 FONTE_BOTAO = ("Segoe UI", 17, "bold")
 FONTE_PEQUENA = ("Segoe UI", 15)
 
+FORMATOS = {
+    "WebP": ("WEBP", ".webp"),
+    "PNG": ("PNG", ".png"),
+    "JPG": ("JPEG", ".jpg"),
+    "GIF": ("GIF", ".gif"),
+    "BMP": ("BMP", ".bmp"),
+    "TIFF": ("TIFF", ".tiff"),
+    "ICO": ("ICO", ".ico"),
+}
+
+if features.check("avif"):
+    FORMATOS["AVIF"] = ("AVIF", ".avif")
+
+FORMATOS_SEM_TRANSPARENCIA = ("JPG", "BMP")
+
+TIPOS_DE_ENTRADA = "*.png *.jpg *.jpeg *.webp *.gif *.bmp *.tif *.tiff *.ico *.avif"
+
 LINK_PORTFOLIO = "https://www.alessandrabrum.com"
 # FIM CONFIGURAÇÕES
 
 
 # ESTADO 
 arquivo_escolhido = None
+formato_escolhido = "WebP" #Vira outro formato quando abre o menu dropdown. Só pra ter um ponto de partida.
+arquivo_salvo = None
+
 
 # INÍCIO DESENHOS DA LUA E DAS ESTRELAS
 ESCALA = 4
@@ -138,6 +160,30 @@ def desenhar_icone_arquivo(tamanho):
 
     return icone.resize((tamanho, tamanho), Image.LANCZOS)
 
+def desenhar_icone_pasta(tamanho):
+    t = tamanho * ESCALA
+    icone = Image.new("RGBA", (t, t), (0, 0, 0, 0))
+    pincel = ImageDraw.Draw(icone)
+    traco = int(t * 0.08)
+
+    def ponto(x, y):
+        return (int(t * x / 24), int(t * y / 24))
+
+    fundo_da_pasta = [
+        ponto(3, 18.5), ponto(3, 5), ponto(9, 5), ponto(11, 7.5),
+        ponto(19, 7.5), ponto(19, 10),
+    ]
+    tampa_aberta = [
+        ponto(3, 18.5), ponto(5.8, 10.3), ponto(21.5, 10.3),
+        ponto(19, 18.5), ponto(3, 18.5),
+    ]
+    pincel.line(fundo_da_pasta, fill=COR_LAVANDA, width=traco, joint="curve")
+    pincel.line(tampa_aberta, fill=COR_LAVANDA, width=traco, joint="curve")
+
+    return icone.resize((tamanho, tamanho), Image.LANCZOS)
+
+
+
 
 def desenhar_icone_janela(tamanho):
     t = tamanho * ESCALA
@@ -166,13 +212,14 @@ def virar_imagem_ctk(imagem_pillow):
 # FIM DESENHOS DA LUA E DAS ESTRELAS
 
 
-# INÍCIO DAS FUNÇÕES DOS BOTÕES
+
+# INÍCIO DOS BOTÕES
 def selecionar_arquivo(evento=None):
     global arquivo_escolhido
 
     caminho = filedialog.askopenfilename(
-        title="Select a PNG image",
-        filetypes=[("PNG images", "*.png")],
+        title="Select an image",
+        filetypes=[("Images", TIPOS_DE_ENTRADA)],
     )
 
     if not caminho:
@@ -182,18 +229,64 @@ def selecionar_arquivo(evento=None):
     rotulo_arquivo.configure(text=arquivo_escolhido.name, text_color=COR_TEXTO)
 
     botao_converter.configure(state="normal", fg_color=COR_BOTAO)
-    rotulo_status.configure(text="The file will be saved in the same folder as the PNG.")
+    rotulo_status.configure(text="Your new image will be saved in the same folder as the original.")
 
+
+
+def escolher_formato(nome_formato):
+    global formato_escolhido
+    formato_escolhido = nome_formato
+
+    if nome_formato in FORMATOS_SEM_TRANSPARENCIA:
+        rotulo_status.configure(
+            text=f"{nome_formato} has no transparency: transparent areas will turn white."
+        )
+    else:
+        rotulo_status.configure(text="Your new image will be saved in the same folder as the original.")
+
+
+def proximo_formato(evento=None):
+    nomes = list(FORMATOS)
+    posicao = nomes.index(formato_escolhido)
+    proximo = nomes[(posicao + 1) % len(nomes)]
+
+    menu_formato.set(proximo)
+    escolher_formato(proximo)
+
+
+def preparar_imagem(imagem):
+    if formato_escolhido not in FORMATOS_SEM_TRANSPARENCIA:
+        return imagem
+
+    imagem = imagem.convert("RGBA")
+    fundo_branco = Image.new("RGB", imagem.size, (255, 255, 255))
+    fundo_branco.paste(imagem, mask=imagem.getchannel("A"))
+    return fundo_branco
 
 def converter_arquivo(evento=None):
+    global arquivo_salvo
+
     if arquivo_escolhido is None:
         return
 
-    arquivo_webp = arquivo_escolhido.with_suffix(".webp")
+    nome_pillow, extensao = FORMATOS[formato_escolhido]
+    arquivo_novo = arquivo_escolhido.with_suffix(extensao)
+
+    if arquivo_novo == arquivo_escolhido:
+        arquivo_novo = arquivo_escolhido.with_stem(arquivo_escolhido.stem + "-copy")
 
     try:
         with Image.open(arquivo_escolhido) as imagem:
-            imagem.save(arquivo_webp, "WEBP", lossless=True)
+            imagem = preparar_imagem(imagem)
+
+            if nome_pillow == "WEBP":
+                imagem.save(arquivo_novo, nome_pillow, lossless=True)
+            elif nome_pillow == "JPEG":
+                imagem.save(arquivo_novo, nome_pillow, quality=95)
+            elif nome_pillow == "AVIF":
+                imagem.save(arquivo_novo, nome_pillow, quality=90)
+            else:
+                imagem.save(arquivo_novo, nome_pillow)
     except FileNotFoundError:
         rotulo_status.configure(text="This file no longer exists. Please select it again.")
         return
@@ -202,11 +295,30 @@ def converter_arquivo(evento=None):
         return
 
     antes = arquivo_escolhido.stat().st_size / 1024
-    depois = arquivo_webp.stat().st_size / 1024
+    depois = arquivo_novo.stat().st_size / 1024
 
     rotulo_status.configure(
-        text=f"Saved {arquivo_webp.name}: {antes:.1f} KB → {depois:.1f} KB"
+        text=f"Saved {arquivo_novo.name} in the same folder: {antes:.1f} KB → {depois:.1f} KB"
     )
+
+    arquivo_salvo = arquivo_novo
+    botao_pasta.configure(state="normal")
+
+
+def abrir_pasta(evento=None):
+    if arquivo_salvo is None or not arquivo_salvo.exists():
+        return
+
+    subprocess.Popen(f'explorer /select,"{arquivo_salvo}"')
+
+
+def mostrar_dica(evento=None):
+    dica_pasta.place(in_=botao_pasta, relx=0.5, y=-8, anchor="s")
+    dica_pasta.lift()
+
+
+def esconder_dica(evento=None):
+    dica_pasta.place_forget()
 
 
 def abrir_portfolio(evento=None):
@@ -218,12 +330,29 @@ def abrir_portfolio(evento=None):
 ctk.set_appearance_mode("dark")
 
 janela = ctk.CTk(fg_color=COR_FUNDO)
-janela.title("Magic Luna - Easy PNG to WebP Converter")
-janela.geometry("640x600")
-janela.minsize(540, 580)
+janela.title("Magic Luna - Local Image Converter")
+janela.geometry("720x620")
+janela.minsize(660, 600)
 
 icone_janela = ImageTk.PhotoImage(desenhar_icone_janela(64))
 janela.after(300, lambda: janela.iconphoto(False, icone_janela))
+
+def pintar_barra_de_titulo():
+    try:
+        barra = ctypes.windll.user32.GetParent(janela.winfo_id())
+        cor_fundo = ctypes.c_int(0x001C1116)
+        cor_texto = ctypes.c_int(0x00FFFFFF)
+        ctypes.windll.dwmapi.DwmSetWindowAttribute(
+            barra, 35, ctypes.byref(cor_fundo), ctypes.sizeof(cor_fundo)
+        )
+        ctypes.windll.dwmapi.DwmSetWindowAttribute(
+            barra, 36, ctypes.byref(cor_texto), ctypes.sizeof(cor_texto)
+        )
+    except AttributeError:
+        pass
+
+
+janela.after(300, pintar_barra_de_titulo)
 # FIM JANELA
 
 
@@ -253,7 +382,7 @@ titulo.pack(pady=(8, 4))
 
 subtitulo = ctk.CTkLabel(
     janela,
-    text="PNG to WebP, with no loss of quality.",
+    text="Convert your images to the format you need.",
     font=FONTE_SUBTITULO,
     text_color=COR_LAVANDA,
 )
@@ -286,7 +415,24 @@ botao_selecionar = ctk.CTkButton(
     height=48,
     command=selecionar_arquivo,
 )
-botao_selecionar.pack(side="right", padx=24, pady=24)
+
+menu_formato = ctk.CTkOptionMenu(
+    painel,
+    values=list(FORMATOS),
+    command=escolher_formato,
+    font=FONTE_BOTAO,
+    dropdown_font=FONTE_TEXTO,
+    fg_color=COR_BOTAO_DESLIGADO,
+    button_color=COR_BOTAO,
+    button_hover_color=COR_BOTAO_HOVER,
+    text_color=COR_TEXTO,
+    dropdown_fg_color=COR_PAINEL,
+    dropdown_hover_color=COR_TEXTO,
+    corner_radius=10,
+    width=130,
+    height=48,
+)
+
 
 rotulo_arquivo = ctk.CTkLabel(
     painel,
