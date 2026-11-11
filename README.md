@@ -1,22 +1,19 @@
-# Magic Luna 🌙
+## 🌙 Magic Luna
 
-🌙 Magic Luna is a downloadable Windows app that converts images between formats, right on your computer. ✨
+Magic Luna is a downloadable Windows app that converts images between formats, right on your computer. ✨
 
+- Version 1.2.0 is available now!
 - Website: https://magicluna.alessandrabrum.com
-- [Download version v1.2.0](https://github.com/AlessandraBrum/magic-luna-image-converter/releases/tag/v1.2.0)
 
-## What it does
+### What's new since the first version
 
-- **Converts between many formats:** WebP, PNG, JPG, GIF, BMP, TIFF, ICO, AVIF and PDF.
-- **Reads PDF files:** convert a PDF to images and every page is saved as its own image (`name-page-1.png`, `name-page-2.png`...).
-- **Turns images into PDF:** multi-frame files such as animated GIFs and multi-page TIFFs become a multi-page PDF.
-- **Keeps your quality:** WebP is saved lossless, and JPG is saved at high quality (95).
-- **Handles transparency:** formats without transparency (JPG, BMP and PDF) turn transparent areas white, and the app tells you before you convert.
-- **Never overwrites your files:** if the file already exists, the new one is saved as `name-copy`.
-- **Shows the result:** after converting, you see the file size before and after, and a button opens the folder with the new file selected.
-- **Works with the keyboard:** `Ctrl+O` selects a file, `Ctrl+F` changes the format, `Ctrl+E` opens the folder of the converted file and `Enter` converts.
-
-The new image is saved in the same folder as the original.
+- **Many formats:** convert between WebP, PNG, JPG, GIF, BMP, TIFF, ICO, AVIF and PDF.
+- **PDF support:** turn a PDF into images (one image per page) or turn images into a PDF.
+- **Format menu:** choose the output format in the app, or press `Ctrl+F` to switch.
+- **Open folder button:** after converting, open the folder with the new file selected (`Ctrl+E`).
+- **File size before and after:** see how much space the new file takes.
+- **Safe saving:** your original file is never overwritten.
+- **New app icon and details:** Magic Luna now has its own moon icon and version information in the file properties.
 
 ### ⚠️ About the Windows security warning
 
@@ -33,9 +30,11 @@ You only need to do this once.
 
 Magic Luna runs 100% on your computer: it does not connect to the internet and your images never leave your device. The full source code is open in this repository, so anyone can check what it does.
 
-- [Full Changelog](https://github.com/AlessandraBrum/magic-luna-image-converter/commits/v1.0.0)
 
-- [Check out the Prototype on Figma](https://www.figma.com/proto/yxyfUJRUgjRv0XiJgZaoV2/Magic-Luna-Converter-PNG-to-WebP-in-Python?node-id=13-177&t=fi1ELCBGUEikAC6F-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1)
+- [Full Changelog](https://github.com/AlessandraBrum/magic-luna-image-converter/commits/v1.2.0)
+
+- [Check out the original prototype on Figma](https://www.figma.com/proto/yxyfUJRUgjRv0XiJgZaoV2/Magic-Luna-Converter-PNG-to-WebP-in-Python?node-id=13-177&t=fi1ELCBGUEikAC6F-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1)
+
 
 <img width="644" height="633" alt="Magic Luna app screenshot: dark purple window with a pink to purple moon and stars logo, a file panel with a format menu and a purple Convert image button" src="https://raw.githubusercontent.com/AlessandraBrum/magic-luna-image-converter/refs/heads/main/1.2.0.0/Prototype2.png" />
 
@@ -44,22 +43,19 @@ Magic Luna runs 100% on your computer: it does not connect to the internet and y
 ---
 <br>
 
-### Português
-
 🌙 O Magic Luna é um app para Windows, que você baixa e usa no seu computador, para converter imagens entre formatos. ✨
 
-### O que ele faz
+A versão 1.2.0 já está disponível!
 
-- **Converte entre vários formatos:** WebP, PNG, JPG, GIF, BMP, TIFF, ICO, AVIF e PDF.
-- **Lê arquivos PDF:** ao converter um PDF em imagens, cada página é salva como uma imagem separada (`nome-page-1.png`, `nome-page-2.png`...).
-- **Transforma imagens em PDF:** arquivos com vários quadros, como GIFs animados e TIFFs de várias páginas, viram um PDF com várias páginas.
-- **Mantém a qualidade:** o WebP é salvo sem perdas, e o JPG é salvo em alta qualidade (95).
-- **Cuida da transparência:** formatos sem transparência (JPG, BMP e PDF) deixam as áreas transparentes brancas, e o app avisa antes de converter.
-- **Nunca sobrescreve seus arquivos:** se o arquivo já existir, o novo é salvo como `nome-copy`.
-- **Mostra o resultado:** depois de converter, você vê o tamanho do arquivo antes e depois, e um botão abre a pasta com o novo arquivo selecionado.
-- **Funciona com o teclado:** `Ctrl+O` escolhe o arquivo, `Ctrl+F` muda o formato, `Ctrl+E` abre a pasta do arquivo convertido e `Enter` converte.
+### Novidades desde a primeira versão
 
-A nova imagem é salva na mesma pasta da original.
+- **Vários formatos:** converta entre WebP, PNG, JPG, GIF, BMP, TIFF, ICO, AVIF, e PDF.
+- **Suporte a PDF:** transforme um PDF em imagens (uma imagem por página) ou transforme imagens em um PDF.
+- **Menu de formatos:** escolha o formato de saída no app, ou aperte `Ctrl+F` para trocar.
+- **Botão de abrir a pasta:** depois de converter, abra a pasta com o novo arquivo selecionado (`Ctrl+E`).
+- **Tamanho do arquivo antes e depois:** veja quanto espaço o novo arquivo ocupa.
+- **Salvamento seguro:** o seu arquivo original nunca é sobrescrito.
+- **Novo ícone e informações do app:** o Magic Luna agora tem o ícone da lua e as informações de versão nas propriedades do arquivo.
 
 ### ⚠️ Sobre o aviso de segurança do Windows
 
