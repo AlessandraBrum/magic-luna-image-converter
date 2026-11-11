@@ -13,7 +13,6 @@ Magic Luna is a downloadable Windows app that converts images between formats, r
 - **Open folder button:** after converting, open the folder with the new file selected (`Ctrl+E`).
 - **File size before and after:** see how much space the new file takes.
 - **Safe saving:** your original file is never overwritten.
-- **New app icon and details:** Magic Luna now has its own moon icon and version information in the file properties.
 
 ### ⚠️ About the Windows security warning
 
