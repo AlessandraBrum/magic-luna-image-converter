@@ -54,7 +54,6 @@ A versão 1.2.0 já está disponível!
 - **Botão de abrir a pasta:** depois de converter, abra a pasta com o novo arquivo selecionado (`Ctrl+E`).
 - **Tamanho do arquivo antes e depois:** veja quanto espaço o novo arquivo ocupa.
 - **Salvamento seguro:** o seu arquivo original nunca é sobrescrito.
-- **Novo ícone e informações do app:** o Magic Luna agora tem o ícone da lua e as informações de versão nas propriedades do arquivo.
 
 ### ⚠️ Sobre o aviso de segurança do Windows
 
