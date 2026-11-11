@@ -1,8 +1,9 @@
-### 🌙 Magic Luna
+## 🌙 Magic Luna
 
 Magic Luna is a downloadable Windows app that converts images between formats, right on your computer. ✨
 
-Version 1.2.0 is available now!
+- Version 1.2.0 is available now!
+- Website: https://magicluna.alessandrabrum.com
 
 ### What's new since the first version
 
@@ -35,7 +36,7 @@ Magic Luna runs 100% on your computer: it does not connect to the internet and y
 - [Check out the original prototype on Figma](https://www.figma.com/proto/yxyfUJRUgjRv0XiJgZaoV2/Magic-Luna-Converter-PNG-to-WebP-in-Python?node-id=13-177&t=fi1ELCBGUEikAC6F-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1)
 
 
-<img width="644" height="633" alt="Magic Luna app screenshot: dark purple window with a pink to purple moon and stars logo, a file panel with a format menu and a purple Convert image button" src="https://github.com/user-attachments/assets/456b622e-342c-4ccc-9737-56f9ba8790c3" />
+<img width="644" height="633" alt="Magic Luna app screenshot: dark purple window with a pink to purple moon and stars logo, a file panel with a format menu and a purple Convert image button" src="https://raw.githubusercontent.com/AlessandraBrum/magic-luna-image-converter/refs/heads/main/1.2.0.0/Prototype2.png" />
 
 <br>
 
@@ -70,7 +71,4 @@ clique nos três pontinhos ao lado do download e escolha **Manter**.
 Você só precisa fazer isso uma vez.
 
 O Magic Luna funciona 100% no seu computador: ele não se conecta à internet e suas imagens nunca saem do seu dispositivo. O código-fonte completo está aberto neste repositório, então qualquer pessoa pode conferir o que ele faz.
-
-
-<img width="644" height="633" alt="Magic Luna app screenshot: dark purple window with a pink to purple moon and stars logo, a file panel with a format menu and a purple Convert image button" src="https://github.com/user-attachments/assets/456b622e-342c-4ccc-9737-56f9ba8790c3" />
 
